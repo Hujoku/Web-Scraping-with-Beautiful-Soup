@@ -1,0 +1,31 @@
+import requests
+from bs4 import BeautifulSoup
+
+# URL of the webpage to scrape
+url = 'https://example.com'
+
+# Send an HTTP GET request to the URL
+response = requests.get(url)
+
+# Parse the HTML content using Beautiful Soup
+soup = BeautifulSoup(response.content, 'html.parser')
+
+# Extract specific information from the webpage
+title = soup.title  # Get the title of the webpage
+paragraphs = soup.find_all('p')  # Find all paragraphs on the webpage
+
+# Print the extracted information
+print("Title of the webpage:", title.text if title else "No title found")
+
+print("\nParagraphs on the webpage:")
+for idx, p in enumerate(paragraphs, 1):
+    print(f"Paragraph {idx}: {p.text}")
+
+# Example of extracting specific content using CSS selectors
+# Assuming there is a div with class 'example-div'
+example_div = soup.select_one('.example-div')
+if example_div:
+    print("\nContent of example-div:")
+    print(example_div.text.strip())
+else:
+    print("\nNo 'example-div' found on the webpage")
